@@ -24,7 +24,7 @@ import { IMonthViewDisplayEventTemplateContext } from "./calendar";
                         <tbody>
                         <tr *ngFor="let row of [0,1,2,3,4,5]">
                             <td *ngFor="let col of [0,1,2,3,4,5,6]" tappable (click)="select(views[0].dates[row*7+col])"
-                                [ngClass]="getHighlightClass(views[0].dates[row*7+col])">
+                                [ngClass]="getHighlimonthview-primary-with-eventghtClass(views[0].dates[row*7+col])">
                                 <template [ngTemplateOutlet]="monthviewDisplayEventTemplate"
                                 [ngOutletContext]="{view: views[0], row: row, col: col}">
                                 </template>
@@ -190,6 +190,26 @@ import { IMonthViewDisplayEventTemplateContext } from "./calendar";
         .monthview-primary-with-event {
           background-color: #3a87ad;
           color: white;
+        }
+
+        .monthview-approved-leave {
+            background-color: #06ad0c;
+            color: white;
+        }
+
+        .monthview-rejected-leave {
+            background-color: #f21818;
+            color: white;
+        }
+
+        .monthview-requested-leave {
+            background-color: #1f1ced;
+            color: white;
+        }
+
+        .monthview-cancelled-leave {
+            background-color: #918a0f;
+            color: white;
         }
 
         .monthview-current {
@@ -449,14 +469,28 @@ export class MonthViewComponent implements ICalendarComponent, OnInit, OnChanges
         let className = '';
 
         if (date.hasEvent) {
-            if (date.secondary) {
+            if(date.events.length == 1) {
+                if(date.events[0].status == "0") {
+                    className = 'monthview-requested-leave';
+                }
+                else if(date.events[0].status == "1") {
+                    className = 'monthview-approved-leave';
+                }
+                else if(date.events[0].status == "2") {
+                    className = 'monthview-rejected-leave';
+                }
+                else if(date.events[0].status == "3") {
+                    className = 'monthview-cancelled-leave';
+                }
+            }
+            /*if (date.secondary) {
                 className = 'monthview-secondary-with-event';
             } else {
                 className = 'monthview-primary-with-event';
-            }
+            }*/
         }
 
-        if (date.selected) {
+        /*if (date.selected) {
             if (className) {
                 className += ' ';
             }
@@ -482,7 +516,7 @@ export class MonthViewComponent implements ICalendarComponent, OnInit, OnChanges
                 className += ' ';
             }
             className += 'monthview-disabled';
-        }
+        }*/
         return className;
     }
 

@@ -8,6 +8,7 @@ export interface IEvent {
     endTime: Date;
     startTime: Date;
     title: string;
+    status: string;
 }
 
 export interface IRange {
@@ -41,7 +42,7 @@ export interface IMonthViewRow {
     label: string;
     secondary: boolean;
     selected?: boolean;
-    disabled: boolean;
+    disabled: boolean
 }
 
 export interface IWeekView extends IView {
@@ -257,7 +258,7 @@ export enum Step {
         .calendar-event-inner {
           overflow: hidden;
           background-color: #3a87ad;
-          color: white;
+          color: #3dbaf7;
           height: 100%;
           width: 100%;
           padding: 2px;
